@@ -1,66 +1,79 @@
-## Foundry
+🚀 RCB Token (ERC20)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+An ERC20 token smart contract built using Foundry and OpenZeppelin.
+This project is for learning ERC20 development, testing, and deployment.
 
-Foundry consists of:
+📦 Project Setup
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Clone this repo
 
-## Documentation
+git clone <your-repo-url>
+cd ERC20Token
 
-https://book.getfoundry.sh/
 
-## Usage
+Install Foundry (if not installed)
 
-### Build
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
 
-```shell
-$ forge build
-```
 
-### Test
+Install dependencies
 
-```shell
-$ forge test
-```
+forge install OpenZeppelin/openzeppelin-contracts
 
-### Format
 
-```shell
-$ forge fmt
-```
+Check remappings
+Make sure remappings.txt contains:
 
-### Gas Snapshots
+@openzeppelin/=lib/openzeppelin-contracts/
 
-```shell
-$ forge snapshot
-```
+📝 Contract
 
-### Anvil
+src/MyToken.sol
 
-```shell
-$ anvil
-```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-### Deploy
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+contract MyToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("RCB", "CHAMPION") {
+        _mint(msg.sender, initialSupply * 10 ** decimals());
+    }
+}
 
-### Cast
+🧪 Testing
+Run all tests
+forge test -vv
 
-```shell
-$ cast <subcommand>
-```
+Example Tests
 
-### Help
+Metadata: Checks token name, symbol, decimals, supply
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Transfer: Ensure balance updates correctly
+
+Approve/Allowance: Validate ERC20 approvals
+
+TransferFrom: Test delegated transfers
+
+Reverts: Invalid operations should fail
+
+🛠 VS Code Setup (Optional)
+
+If you see errors like:
+Source not found: File import callback not supported (6275)
+
+➡ Fix by adding in .vscode/settings.json:
+
+{
+  "solidity.remappings": [
+    "@openzeppelin/=lib/openzeppelin-contracts/"
+  ]
+}
+
+
+Or install Foundry Solidity Language Server.
+
+📜 License
+
+MIT
